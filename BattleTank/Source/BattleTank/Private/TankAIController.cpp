@@ -2,6 +2,22 @@
 
 #include "TankAIController.h"
 
+void ATankAIController::Tick(float DeltaTime) {
+	Super::Tick(DeltaTime);
+
+	// If the player has a tank
+	if (GetPlayerTank())
+	{
+		//Aim towards player
+		auto PlayerLocation = GetPlayerTank()->GetActorLocation();
+		GetControlledTank()->AimAt(PlayerLocation);
+
+		//Fire if ready
+
+	}
+	
+}
+
 void ATankAIController::BeginPlay() {
 	
 	Super::BeginPlay();
