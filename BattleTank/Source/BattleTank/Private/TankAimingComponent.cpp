@@ -2,6 +2,7 @@
 
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -10,7 +11,7 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true; //TODO does this need to tick?
+	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
 }
@@ -30,27 +31,45 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		StartLocation,
 		HitLocation,
 		LaunchSpeed,
+		false,
+		0.f,
+		0.f,
 		ESuggestProjVelocityTraceOption::DoNotTrace
 	);
 
 	if (bFoundAimSolution) // Calculate Launch velocity 
 	{ 
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
-		MoveBarrel(AimDirection);
+		MoveBarrelTowards(AimDirection);
+		auto Time = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found"), Time);	
 	}
-	
+	else
+	{
+		auto Time = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT("%f: No aim solve found"), Time);
+	}	
 }
 
-void UTankAimingComponent::MoveBarrel(FVector AimDirection) {
+void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
 	// Work out the difference between current barrel roation and aim direction
 
 	auto BarrelRotation = TankBarrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotation = AimAsRotator - BarrelRotation;
 
-	TankBarrel->Elevate(5); // TODO remove magic number for testing
+	//Elevate the barrel
+	TankBarrel->Elevate(DeltaRotation.Pitch);
 
-
+	//Rotate the turret
+	if (DeltaRotation.Yaw > -180.f && DeltaRotation.Yaw < 180.f)
+	{
+		TankTurret->Rotate(DeltaRotation.Yaw);
+	}
+	else // Avoid going the long-way round
+	{
+		TankTurret->Rotate(-DeltaRotation.Yaw);
+	}
 }
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
@@ -58,3 +77,6 @@ void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 	TankBarrel = BarrelToSet;
 }
 
+void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet) {
+	TankTurret = TurretToSet;
+}

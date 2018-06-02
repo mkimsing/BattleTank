@@ -2,13 +2,14 @@
 
 #pragma once
 
-#include "Tank.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/Actor.h"
 #include "Engine/World.h"
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h" //Must be last include
+
+class ATank;
 
 /**
  * 

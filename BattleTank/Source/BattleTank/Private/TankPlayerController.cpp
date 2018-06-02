@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankPlayerController.h"
+#include "Tank.h"
 
 void ATankPlayerController::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
@@ -26,7 +27,7 @@ ATank* ATankPlayerController::GetControlledTank() const {
 void ATankPlayerController::AimTowardsCrosshair() {
 	if (!GetControlledTank()) { return; }
 	
-	FVector HitLocation; // Out parameter
+	FVector HitLocation(0); // Out parameter
 
 	///Get world location (linetrace) through crosshair
 	///If Hit, Aim at location
@@ -48,18 +49,19 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 		GetLookVectorHitLocation(LookDirection, OutHitLocation);
 	}
 	
-	//Line-trace along that look direction, see what we hit (up to maxx range)
 	return true;
 }
 
+// Find where the player is looking
 bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const {
 	
 	FVector WorldLocation;
 	return DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, WorldLocation, LookDirection);
 }
 
+// Line Trace along that direction and see what we hit
 bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const {
-	FHitResult Hit;
+	FHitResult Hit; 
 	auto StartLocation = PlayerCameraManager->GetCameraLocation();
 	auto EndLocation = StartLocation + (LookDirection * LineTraceRange);
 	if (GetWorld()->LineTraceSingleByChannel(
