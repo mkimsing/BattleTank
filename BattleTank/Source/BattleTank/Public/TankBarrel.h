@@ -7,7 +7,7 @@
 #include "TankBarrel.generated.h"
 
 /**
- * 
+ * Tank Barrel controls and sets the barrels horizontal movement
  */
 UCLASS(meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankBarrel : public UStaticMeshComponent
