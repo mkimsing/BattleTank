@@ -7,11 +7,20 @@
 #include "Components/StaticMeshComponent.h"
 #include "TankAimingComponent.generated.h"
 
-// Forward Declaration
+/// Enum representing aiming status
+UENUM()
+enum class EFiringStatus : uint8
+{
+	Aiming,
+	Locked,
+	Reloading
+};
+
+/// Forward Declarations
 class UTankBarrel;
 class UTankTurret;
 
-// Holds the properties of the barrel and elevate method
+/// Holds the properties of the barrel and elevate method
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
@@ -32,7 +41,13 @@ public:
 	//Setter for turret
 	void SetTurretReference(UTankTurret* TurretToSet);
 
+protected:
+	UPROPERTY(BlueprintReadOnly, Category = "State")
+	EFiringStatus FiringStatus = EFiringStatus::Reloading;
+
 private:
 	UTankBarrel* TankBarrel = nullptr;
 	UTankTurret* TankTurret = nullptr;
+	
+	
 };
