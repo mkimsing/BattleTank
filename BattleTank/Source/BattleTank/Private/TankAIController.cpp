@@ -11,6 +11,9 @@ void ATankAIController::Tick(float DeltaTime) {
 	// If the player has a tank
 	if (PlayerTank)
 	{
+		//Move towards the player
+		MoveToActor(PlayerTank, AcceptanceRadius);
+
 		//Aim towards player
 		auto PlayerLocation = PlayerTank->GetActorLocation();
 		ControlledTank->AimAt(PlayerLocation);
