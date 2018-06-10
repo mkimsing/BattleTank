@@ -33,6 +33,8 @@ protected:
 
 private:
 
+	void BeginPlay() override;
+
 	// Sets default values for this pawn's properties
 	ATank();
 	
