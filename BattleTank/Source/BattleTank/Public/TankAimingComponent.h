@@ -33,13 +33,9 @@ public:
 	//Aim
 	void AimAt(FVector HitLocation, float LaunchSpeed);
 
-	void MoveBarrelTowards(FVector AimDirection);
-
-	//Setter for barrel
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
-
-	//Setter for turret
-	void SetTurretReference(UTankTurret* TurretToSet);
+	//Initialize references to the tank parts
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void InitTurretComponents(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
@@ -48,6 +44,6 @@ protected:
 private:
 	UTankBarrel* TankBarrel = nullptr;
 	UTankTurret* TankTurret = nullptr;
-	
-	
+
+	void MoveBarrelTowards(FVector AimDirection);
 };
