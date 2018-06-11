@@ -31,7 +31,7 @@ public:
 	UTankAimingComponent();
 
 	//Aim
-	void AimAt(FVector HitLocation, float LaunchSpeed);
+	void AimAt(FVector HitLocation);
 
 	//Initialize references to the tank parts
 	UFUNCTION(BlueprintCallable, Category = "Setup")
@@ -46,4 +46,7 @@ private:
 	UTankTurret* TankTurret = nullptr;
 
 	void MoveBarrelTowards(FVector AimDirection);
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float LaunchSpeed = 6000;
 };

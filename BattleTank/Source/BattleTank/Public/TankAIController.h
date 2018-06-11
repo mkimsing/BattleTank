@@ -9,6 +9,7 @@
 
 //Forward Declarations
 class ATank;
+class UTankAimingComponent;
 
 /**
  * 
@@ -26,4 +27,7 @@ private:
 
 	//How close the AI tanks can get to the player (in cm)
 	float AcceptanceRadius = 4000;
+
+	// Local ref to aiming component
+	UTankAimingComponent* AimingComponent;
 };
