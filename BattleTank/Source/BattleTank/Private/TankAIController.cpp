@@ -19,8 +19,7 @@ void ATankAIController::Tick(float DeltaTime) {
 	AimingComponent->AimAt(PlayerLocation);
 
 	//Fire
-	//ControlledTank->Fire(); 
-	//TODO fix firing (cannot call fire on pawn)
+	AimingComponent->Fire(); //TODO limit firing rate
 }
 
 void ATankAIController::BeginPlay() {
