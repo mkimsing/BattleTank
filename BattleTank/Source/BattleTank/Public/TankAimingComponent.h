@@ -45,12 +45,21 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringStatus FiringStatus = EFiringStatus::Reloading;
 
+	void BeginPlay() override;
+
 private:
+	
+	bool IsBarrelMoving();
+	float Tolerance = 0.01;
+
+	void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction) override;
 
 	void MoveBarrelTowards(FVector AimDirection);
 
 	UTankBarrel* TankBarrel = nullptr;
 	UTankTurret* TankTurret = nullptr;
+
+	FVector AimDirection;
 
 	/// Variables for firing method
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
