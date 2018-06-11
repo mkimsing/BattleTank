@@ -9,7 +9,7 @@ void ATankAIController::Tick(float DeltaTime) {
 	auto ControlledTank =  Cast<ATank>(GetPawn());
 
 	// If the player has a tank
-	if (PlayerTank)
+	if (ensure(PlayerTank))
 	{
 		//Move towards the player
 		MoveToActor(PlayerTank, AcceptanceRadius);

@@ -24,7 +24,7 @@ void UTankAimingComponent::InitTurretComponents(UTankBarrel * BarrelToSet, UTank
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
-	if (!TankBarrel) { return; }
+	if (!ensure(TankBarrel)) { return; }
 	
 	FVector OutLaunchVelocity;
 	FVector StartLocation = TankBarrel->GetSocketLocation(FName("FiringLocation"));
@@ -51,10 +51,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
 
-	if (!TankTurret || !TankBarrel)
-	{
-		return;
-	}
+	if (!ensure(TankTurret && TankBarrel)){ return;}
 
 	// Work out the difference between current barrel roation and aim direction
 
