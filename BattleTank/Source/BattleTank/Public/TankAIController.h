@@ -21,11 +21,14 @@ class BATTLETANK_API ATankAIController : public AAIController
 public: 
 	void BeginPlay() override;
 
-private:
-	void Tick(float DeltaTime) override;
+protected:
 
 	//How close the AI tanks can get to the player (in cm)
+	UPROPERTY(EditAnywhere, Category = "Setup")
 	float AcceptanceRadius = 4000;
+
+private:
+	void Tick(float DeltaTime) override;
 
 	// Local ref to aiming component
 	UTankAimingComponent* AimingComponent;

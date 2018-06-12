@@ -44,6 +44,11 @@ void UTankAimingComponent::InitTurretComponents(UTankBarrel * BarrelToSet, UTank
 	TankBarrel = BarrelToSet;
 }
 
+EFiringStatus UTankAimingComponent::GetFiringStatus() const
+{
+	return FiringStatus;
+}
+
 bool UTankAimingComponent::IsBarrelMoving()
 {
 	if (!ensure(TankBarrel)) { return false; }

@@ -18,7 +18,8 @@ void ATankPlayerController::BeginPlay() {
 
 }
 
-void ATankPlayerController::AimTowardsCrosshair() {
+void ATankPlayerController::AimTowardsCrosshair() 
+{
 	if (!GetPawn()) { return; }
 
 	UTankAimingComponent* AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
@@ -43,10 +44,10 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	// De-Project the screen position of the crosshair to a world direction
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection)) {
-		GetLookVectorHitLocation(LookDirection, OutHitLocation);
+		return GetLookVectorHitLocation(LookDirection, OutHitLocation);
 	}
 	
-	return true;
+	return false;
 }
 
 // Find where the player is looking
