@@ -19,7 +19,7 @@ void ATankPlayerController::BeginPlay() {
 }
 
 void ATankPlayerController::AimTowardsCrosshair() {
-	if (!ensure(GetPawn())) { return; }
+	if (!GetPawn()) { return; }
 
 	UTankAimingComponent* AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return; }
