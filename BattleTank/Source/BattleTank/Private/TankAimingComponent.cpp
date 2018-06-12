@@ -6,7 +6,6 @@
 #include "Projectile.h"
 #include "Kismet/GameplayStatics.h"
 
-
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
 {
@@ -31,6 +30,10 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 	else if (IsBarrelMoving())
 	{
 		FiringStatus = EFiringStatus::Aiming;
+	}
+	else if (AmmoCount <= 0)
+	{
+		FiringStatus = EFiringStatus::OutOfAmmo;
 	}
 	else
 	{
@@ -108,18 +111,20 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
 }
 
 void UTankAimingComponent::Fire() {
+	if (AmmoCount != 0) { // TODO Clean up this logic ?
+		if (FiringStatus == EFiringStatus::Locked || FiringStatus == EFiringStatus::Aiming) {
+			if (!ensure(TankBarrel)) { return; }
+			if (!ensure(ProjectileBlueprint)) { return; }
+			//Spawn a projectile at the end of the barrel
+			auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+				ProjectileBlueprint,
+				TankBarrel->GetSocketLocation(FName(TEXT("FiringLocation"))),
+				TankBarrel->GetSocketRotation(FName(TEXT("FiringLocation")))
+				);
 
-	if (FiringStatus != EFiringStatus::Reloading) {
-		if(!ensure(TankBarrel)) {return;}
-		if(!ensure(ProjectileBlueprint)) { return; }
-		//Spawn a projectile at the end of the barrel
-		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
-			ProjectileBlueprint,
-			TankBarrel->GetSocketLocation(FName(TEXT("FiringLocation"))),
-			TankBarrel->GetSocketRotation(FName(TEXT("FiringLocation")))
-			);
-
-		Projectile->LaunchProjectile(LaunchSpeed);
-		LastFireTime = FPlatformTime::Seconds();
+			Projectile->LaunchProjectile(LaunchSpeed);
+			LastFireTime = FPlatformTime::Seconds();
+			AmmoCount--;
+		}
 	}
 }
