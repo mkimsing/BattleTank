@@ -12,12 +12,15 @@ UTankAimingComponent::UTankAimingComponent()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
+
 }
 
 void UTankAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	LastFireTime = FPlatformTime::Seconds();
+
+	AmmoCount = MaxAmmo;
 }
 
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
@@ -111,6 +114,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
 }
 
 void UTankAimingComponent::Fire() {
+
 	if (AmmoCount != 0) { // TODO Clean up this logic ?
 		if (FiringStatus == EFiringStatus::Locked || FiringStatus == EFiringStatus::Aiming) {
 			if (!ensure(TankBarrel)) { return; }
@@ -127,4 +131,9 @@ void UTankAimingComponent::Fire() {
 			AmmoCount--;
 		}
 	}
+}
+
+int32 UTankAimingComponent::GetAmmoCount()
+{
+	return AmmoCount;
 }

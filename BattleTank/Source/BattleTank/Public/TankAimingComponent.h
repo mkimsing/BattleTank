@@ -44,14 +44,13 @@ public:
 
 	EFiringStatus GetFiringStatus() const;
 
+	UFUNCTION(BlueprintCallable)
+	int32 GetAmmoCount();
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringStatus FiringStatus = EFiringStatus::Reloading;
 
-	int32 MaxAmmo = 4;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Firing")
-	int32 AmmoCount = MaxAmmo; 		//TODO Reset AmmoCount to Max somewhere
 
 	void BeginPlay() override;
 
@@ -80,4 +79,8 @@ private:
 
 	float LastFireTime = 0;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	int32 MaxAmmo = 4;
+
+	int32 AmmoCount; 		//TODO Reset AmmoCount to Max somewhere
 };
