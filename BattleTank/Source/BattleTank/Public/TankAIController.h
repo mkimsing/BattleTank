@@ -32,4 +32,9 @@ private:
 
 	// Local ref to aiming component
 	UTankAimingComponent* AimingComponent;
+
+	virtual void SetPawn(APawn* InPawn) override;
+
+	UFUNCTION()
+	void OnPossessedTankDeath();
 };

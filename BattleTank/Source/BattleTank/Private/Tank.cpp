@@ -5,9 +5,10 @@
 // Sets default values
 ATank::ATank()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-	CurrentHealth = MaxHealth;
+
+
 }
 
 float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser)
@@ -18,7 +19,12 @@ float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEv
 	CurrentHealth -= DamageToApply;
 	if (CurrentHealth <= 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("%s has died!"), *GetName());
+		OnTankDeath.Broadcast();
 	}
 	return DamageToApply;
+}
+
+float ATank::GetHealthPercentage() const
+{
+	return (float)CurrentHealth / (float)MaxHealth;
 }
