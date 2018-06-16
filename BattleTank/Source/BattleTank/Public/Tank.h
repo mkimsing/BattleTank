@@ -25,11 +25,13 @@ public:
 
 	FTankDelegate OnTankDeath;
 
+	void BeginPlay();
+
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Health")
 	int32 MaxHealth = 100;
 
 	UPROPERTY(VisibleAnywhere, Category = "Health")
-	int32 CurrentHealth = MaxHealth;
+	int32 CurrentHealth;
 
 };
