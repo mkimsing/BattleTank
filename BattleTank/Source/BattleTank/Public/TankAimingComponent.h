@@ -39,6 +39,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Firing)
 	void Fire();
 
+	UFUNCTION(BlueprintCallable, Category = Firing)
+	void Reload();
+
 	//Initialize references to the tank parts
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void InitTurretComponents(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
@@ -88,7 +91,16 @@ private:
 
 	int32 AmmoCount; 		//TODO Reset AmmoCount to Max somewhere
 
+	UFUNCTION()
+	void RefillAmmo();
+
+	//Manage the reload timer
+	FTimerHandle ReloadTimerHandle;
+
 	/* SOUNDS */
 	UPROPERTY(EditDefaultsOnly, Category = "Sounds")
 	USoundCue* FiringSound;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Sounds")
+	USoundCue* ReloadSound;
 };

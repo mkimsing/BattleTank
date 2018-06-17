@@ -27,17 +27,17 @@ void UTankAimingComponent::BeginPlay()
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
+	if (AmmoCount <= 0)
+	{
+		FiringStatus = EFiringStatus::OutOfAmmo;
+	}
+	else if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
 	{
 		FiringStatus = EFiringStatus::Reloading;
 	}
 	else if (IsBarrelMoving())
 	{
 		FiringStatus = EFiringStatus::Aiming;
-	}
-	else if (AmmoCount <= 0)
-	{
-		FiringStatus = EFiringStatus::OutOfAmmo;
 	}
 	else
 	{
@@ -143,6 +143,21 @@ void UTankAimingComponent::Fire() {
 			);
 		}
 	}
+}
+
+void UTankAimingComponent::Reload()
+{
+	//Prevent firing during reload
+	AmmoCount = 0;
+
+	//Refill ammo after certain time (seconds)
+	float TimeToWait = 3.f;
+	GetWorld()->GetTimerManager().SetTimer(ReloadTimerHandle, this, &UTankAimingComponent::RefillAmmo, TimeToWait, false);
+}
+
+void UTankAimingComponent::RefillAmmo()
+{
+	AmmoCount = MaxAmmo;
 }
 
 int32 UTankAimingComponent::GetAmmoCount()
