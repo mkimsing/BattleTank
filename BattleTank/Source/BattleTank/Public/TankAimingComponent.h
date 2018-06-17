@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Sound/SoundCue.h"
 #include "TankAimingComponent.generated.h"
 
 /// Enum representing aiming status
@@ -47,10 +48,13 @@ public:
 	UFUNCTION(BlueprintCallable)
 	int32 GetAmmoCount();
 
+	UFUNCTION(BlueprintCallable)
+	int32 GetMaxAmmo();
+
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringStatus FiringStatus = EFiringStatus::Reloading;
-
 
 	void BeginPlay() override;
 
@@ -83,4 +87,8 @@ private:
 	int32 MaxAmmo = 4;
 
 	int32 AmmoCount; 		//TODO Reset AmmoCount to Max somewhere
+
+	/* SOUNDS */
+	UPROPERTY(EditDefaultsOnly, Category = "Sounds")
+	USoundWave* FiringSound;
 };

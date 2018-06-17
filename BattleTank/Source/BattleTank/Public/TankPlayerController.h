@@ -10,7 +10,7 @@
 #include "TankPlayerController.generated.h" //Must be last include
 
 class UTankAimingComponent;
-
+class ATank;
 /**
  * 
  */
@@ -22,10 +22,13 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 public:
 
 	virtual void BeginPlay() override;
-
+	
 protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent* AimComponentRef);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerTankDamage();
 
 private:
 	virtual void Tick(float DeltaTime) override;
@@ -53,4 +56,6 @@ private:
 
 	UFUNCTION()
 	void OnPossessedTankDeath();
+
+
 };

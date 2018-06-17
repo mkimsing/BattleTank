@@ -18,12 +18,14 @@ class BATTLETANK_API ATank : public APawn
 	ATank();
 	
 public:
-	float TakeDamage( float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser) override;
+	float TakeDamage( float DamageAmount, struct FDamageEvent const
+		& DamageEvent, class AController * EventInstigator, AActor * DamageCauser) override;
 
 	UFUNCTION(BlueprintPure, Category = "Health")
 	float GetHealthPercentage() const;
 
 	FTankDelegate OnTankDeath;
+	FTankDelegate OnTakeDamage;
 
 	void BeginPlay();
 

@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Tank.h"
+#include "GameFramework/Controller.h"
 
 // Sets default values
 ATank::ATank()
@@ -25,7 +26,9 @@ float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEv
 	{
 		OnTankDeath.Broadcast();
 	}
-	return DamageToApply;
+	
+	OnTakeDamage.Broadcast();
+	return (float)DamageToApply;
 }
 
 float ATank::GetHealthPercentage() const

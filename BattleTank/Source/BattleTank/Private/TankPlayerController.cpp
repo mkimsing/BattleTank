@@ -15,7 +15,6 @@ void ATankPlayerController::BeginPlay() {
 	UTankAimingComponent* AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return; }	
 	FoundAimingComponent(AimingComponent);
-
 }
 
 void ATankPlayerController::AimTowardsCrosshair() 
@@ -87,6 +86,7 @@ void ATankPlayerController::SetPawn(APawn* InPawn)
 
 		//Subscribe this method to the tank's death event
 		PossessedTank->OnTankDeath.AddUniqueDynamic(this, &ATankPlayerController::OnPossessedTankDeath);
+		PossessedTank->OnTakeDamage.AddUniqueDynamic(this, &ATankPlayerController::OnPlayerTankDamage);
 	}
 }
 

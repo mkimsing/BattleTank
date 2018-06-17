@@ -3,6 +3,7 @@
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
+#include "Tank.h"
 #include "Projectile.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -129,6 +130,17 @@ void UTankAimingComponent::Fire() {
 			Projectile->LaunchProjectile(LaunchSpeed);
 			LastFireTime = FPlatformTime::Seconds();
 			AmmoCount--;
+
+			// Play Firing Noise
+			UGameplayStatics::PlaySoundAtLocation
+			(
+				GetWorld(),
+				FiringSound,
+				TankBarrel->GetSocketLocation(FName(TEXT("FiringLocation"))),
+				TankBarrel->GetSocketRotation(FName(TEXT("FiringLocation"))),
+				1.f,
+				1.f
+			);
 		}
 	}
 }
@@ -136,4 +148,9 @@ void UTankAimingComponent::Fire() {
 int32 UTankAimingComponent::GetAmmoCount()
 {
 	return AmmoCount;
+}
+
+int32 UTankAimingComponent::GetMaxAmmo()
+{
+	return MaxAmmo;
 }
