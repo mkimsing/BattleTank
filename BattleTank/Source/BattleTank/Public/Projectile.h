@@ -8,6 +8,7 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "PhysicsEngine/RadialForceComponent.h"
+#include "Sound/SoundCue.h"
 #include "Projectile.generated.h"
 
 UCLASS()
@@ -20,6 +21,10 @@ public:
 	AProjectile();
 
 	void LaunchProjectile(float Speed);
+	
+	//Public to expose to blueprint
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	UStaticMeshComponent* CollisionMesh = nullptr;
 
 protected:
 	// Called when the game starts or when spawned
@@ -36,8 +41,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float ProjectileDamage = 20.f;
 
-	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* CollisionMesh = nullptr;
+
 
 	UPROPERTY(VisibleAnywhere)
 	UParticleSystemComponent* LaunchBlast = nullptr;
@@ -51,5 +55,8 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	URadialForceComponent* ExplosionForce = nullptr;
 
+	/* SOUNDS */
+	UPROPERTY(EditDefaultsOnly, Category = "Sounds")
+	USoundCue* ExplosionSound;
 
 };

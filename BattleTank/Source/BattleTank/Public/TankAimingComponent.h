@@ -90,5 +90,5 @@ private:
 
 	/* SOUNDS */
 	UPROPERTY(EditDefaultsOnly, Category = "Sounds")
-	USoundWave* FiringSound;
+	USoundCue* FiringSound;
 };

@@ -27,6 +27,7 @@ AProjectile::AProjectile()
 	
 	ExplosionForce = CreateDefaultSubobject<URadialForceComponent>(FName("Explosion Force"));
 	ExplosionForce->SetupAttachment(CollisionMesh);
+
 }
 
 // Called when the game starts or when spawned
@@ -60,6 +61,17 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 		ExplosionForce->Radius,
 		UDamageType::StaticClass(),
 		TArray<AActor*>() //Damage all actors (ignore nothing)
+	);
+
+	// Play Explosion Noise
+	UGameplayStatics::PlaySoundAtLocation
+	(
+		GetWorld(),
+		ExplosionSound,
+		GetActorLocation(),
+		GetActorRotation(),
+		1.f,
+		1.f
 	);
 }
 
