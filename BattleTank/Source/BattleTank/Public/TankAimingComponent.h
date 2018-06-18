@@ -14,6 +14,7 @@ enum class EFiringStatus : uint8
 {
 	Aiming,
 	Locked,
+	Firing,
 	Reloading,
 	OutOfAmmo
 };
@@ -54,9 +55,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	int32 GetMaxAmmo();
 
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void InitAudioComponents(UAudioComponent* ReloadComponentToSet);
 
 protected:
-	UPROPERTY(BlueprintReadOnly, Category = "State")
+	UPROPERTY(BlueprintReadOnly, Category = "Firing")
 	EFiringStatus FiringStatus = EFiringStatus::Reloading;
 
 	void BeginPlay() override;
@@ -102,5 +105,5 @@ private:
 	USoundCue* FiringSound;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Sounds")
-	USoundCue* ReloadSound;
+	UAudioComponent* ReloadSoundComponent = nullptr;
 };

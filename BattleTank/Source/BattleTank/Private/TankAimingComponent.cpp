@@ -5,6 +5,7 @@
 #include "TankTurret.h"
 #include "Tank.h"
 #include "Projectile.h"
+#include "Components/AudioComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values for this component's properties
@@ -27,13 +28,18 @@ void UTankAimingComponent::BeginPlay()
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	if (AmmoCount <= 0)
+
+	if (GetWorld()->GetTimerManager().IsTimerActive(ReloadTimerHandle))
+	{
+		FiringStatus = EFiringStatus::Reloading;
+	}
+	else if (AmmoCount <= 0)
 	{
 		FiringStatus = EFiringStatus::OutOfAmmo;
 	}
 	else if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
 	{
-		FiringStatus = EFiringStatus::Reloading;
+		FiringStatus = EFiringStatus::Firing;
 	}
 	else if (IsBarrelMoving())
 	{
@@ -147,12 +153,24 @@ void UTankAimingComponent::Fire() {
 
 void UTankAimingComponent::Reload()
 {
-	//Prevent firing during reload
-	AmmoCount = 0;
+	if (FiringStatus != EFiringStatus::Reloading)
+	{
+		//Prevent firing during reload
+		AmmoCount = 0;
 
-	//Refill ammo after certain time (seconds)
-	float TimeToWait = 3.f;
-	GetWorld()->GetTimerManager().SetTimer(ReloadTimerHandle, this, &UTankAimingComponent::RefillAmmo, TimeToWait, false);
+		//Play sound
+		ReloadSoundComponent->Play(0.f);
+
+		//Refill ammo after certain time (seconds)
+		float TimeToWait = 3.f;
+		GetWorld()->GetTimerManager().SetTimer(ReloadTimerHandle, this, &UTankAimingComponent::RefillAmmo, TimeToWait, false);
+	}
+
+}
+
+void UTankAimingComponent::InitAudioComponents(UAudioComponent* ReloadComponentToSet)
+{
+	ReloadSoundComponent = ReloadComponentToSet;
 }
 
 void UTankAimingComponent::RefillAmmo()
