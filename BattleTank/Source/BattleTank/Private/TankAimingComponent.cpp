@@ -124,8 +124,10 @@ void UTankAimingComponent::Fire() {
 
 	if (AmmoCount != 0) { // TODO Clean up this logic ?
 		if (FiringStatus == EFiringStatus::Locked || FiringStatus == EFiringStatus::Aiming) {
+
 			if (!ensure(TankBarrel)) { return; }
 			if (!ensure(ProjectileBlueprint)) { return; }
+
 			//Spawn a projectile at the end of the barrel
 			auto Projectile = GetWorld()->SpawnActor<AProjectile>(
 				ProjectileBlueprint,

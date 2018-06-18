@@ -57,14 +57,15 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void InitAudioComponents(UAudioComponent* ReloadComponentToSet);
+	
 
 protected:
-	UPROPERTY(BlueprintReadOnly, Category = "Firing")
-	EFiringStatus FiringStatus = EFiringStatus::Reloading;
 
 	void BeginPlay() override;
 
 private:
+
+	EFiringStatus FiringStatus = EFiringStatus::Reloading;
 	
 	bool IsBarrelMoving();
 	float Tolerance = 0.01;
@@ -92,7 +93,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	int32 MaxAmmo = 4;
 
-	int32 AmmoCount; 		//TODO Reset AmmoCount to Max somewhere
+	int32 AmmoCount;
 
 	UFUNCTION()
 	void RefillAmmo();
