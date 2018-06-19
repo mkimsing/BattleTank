@@ -51,6 +51,4 @@ void ATankAIController::OnPossessedTankDeath()
 	OnKilled();
 	GetPawn()->DetachFromControllerPendingDestroy();
 
-	
-	//GetPawn()->Destroy();
 }

@@ -23,6 +23,9 @@ public:
 
 	virtual void BeginPlay() override;
 	
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayerDeath();
+
 protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent* AimComponentRef);
