@@ -47,6 +47,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void InitTurretComponents(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
+	UFUNCTION(BlueprintCallable)
 	EFiringStatus GetFiringStatus() const;
 
 	UFUNCTION(BlueprintCallable)
@@ -104,7 +105,6 @@ private:
 	/* SOUNDS */
 	UPROPERTY(EditDefaultsOnly, Category = "Sounds")
 	USoundCue* FiringSound;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Sounds")
-	UAudioComponent* ReloadSoundComponent = nullptr;
+	
+	UAudioComponent* ReloadSoundComponent;
 };

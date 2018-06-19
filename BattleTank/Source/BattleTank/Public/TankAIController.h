@@ -21,6 +21,9 @@ class BATTLETANK_API ATankAIController : public AAIController
 public: 
 	void BeginPlay() override;
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnKilled();
+
 protected:
 
 	//How close the AI tanks can get to the player (in cm)
@@ -34,7 +37,7 @@ private:
 	UTankAimingComponent* AimingComponent;
 
 	virtual void SetPawn(APawn* InPawn) override;
-
+	
 	UFUNCTION()
 	void OnPossessedTankDeath();
 };

@@ -84,7 +84,7 @@ void ATankPlayerController::SetPawn(APawn* InPawn)
 		ATank* PossessedTank = Cast<ATank>(InPawn);
 		if (!ensure(PossessedTank)) { return; }
 
-		//Subscribe this method to the tank's death event
+		//Subscribe this method to the tank's death event and take damage event
 		PossessedTank->OnTankDeath.AddUniqueDynamic(this, &ATankPlayerController::OnPossessedTankDeath);
 		PossessedTank->OnTakeDamage.AddUniqueDynamic(this, &ATankPlayerController::OnPlayerTankDamage);
 	}
