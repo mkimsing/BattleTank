@@ -18,12 +18,18 @@ void ATankAIController::Tick(float DeltaTime) {
 	//Aim towards player
 	auto PlayerLocation = PlayerTank->GetActorLocation();
 	AimingComponent->AimAt(PlayerLocation);
-
+	
 	//Fire
 	if (AimingComponent->GetFiringStatus() == EFiringStatus::Locked) {
 		AimingComponent->Fire();
-	}
-	
+
+		//Reload if needed
+		if (AimingComponent->GetAmmoCount() <= 0
+			&& AimingComponent->GetFiringStatus() != EFiringStatus::Reloading)
+		{
+			AimingComponent->Reload();
+		}
+	}	
 }
 
 void ATankAIController::BeginPlay() {
