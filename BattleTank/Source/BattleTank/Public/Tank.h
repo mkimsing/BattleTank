@@ -27,7 +27,22 @@ public:
 	FTankDelegate OnTankDeath;
 	FTankDelegate OnTakeDamage;
 
+	UPROPERTY(BlueprintAssignable, Category = "TimeDilation")
+	FTankDelegate TimeDilationEvent;
+
 	void BeginPlay();
+
+	UFUNCTION(BlueprintCallable, Category = "TimeDilation")
+	void AttemptDilateTime();
+
+	UFUNCTION(BlueprintCallable, Category = "TimeDilation")
+	void ResumeTime();
+
+	UFUNCTION(BlueprintCallable, Category = "TimeDilation")
+	void ManageDilationMeter();
+
+	UFUNCTION(BlueprintCallable, Category = "TimeDilation")
+	float GetTimeDilationMeterPercent();
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Health")
@@ -36,4 +51,17 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Health")
 	int32 CurrentHealth;
 
+	UPROPERTY(EditDefaultsOnly, Category = "TimeDilation")
+	float TimeDilationMeterMax = 100;
+
+	UPROPERTY(VisibleAnywhere, Category = "TimeDilation")
+	float TimeDilationMeter = TimeDilationMeterMax;
+
+	UPROPERTY(EditDefaultsOnly, Category = "TimeDilation")
+	float MeterDrainRate = 0.3;
+
+	UPROPERTY(EditDefaultsOnly, Category = "TimeDilation")
+	float MeterGainRate = 0.3;
+
+	bool TimeDilated = false;;
 };

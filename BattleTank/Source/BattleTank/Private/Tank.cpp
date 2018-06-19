@@ -2,6 +2,7 @@
 
 #include "Tank.h"
 #include "GameFramework/Controller.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ATank::ATank()
@@ -34,4 +35,52 @@ float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEv
 float ATank::GetHealthPercentage() const
 {
 	return (float)CurrentHealth / (float)MaxHealth;
+}
+
+void ATank::AttemptDilateTime()
+{
+	if (TimeDilationMeter > 0 && TimeDilated == false)
+	{
+		UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 0.5f);
+		TimeDilated = true;
+		TimeDilationEvent.Broadcast();
+	}
+}
+
+void ATank::ResumeTime()
+{
+	if (TimeDilated == true) {
+		UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 1.f);
+		TimeDilated = false;
+		TimeDilationEvent.Broadcast();
+	}
+}
+
+void ATank::ManageDilationMeter()
+{
+	if (TimeDilated)
+	{
+		if (TimeDilationMeter > 0)
+		{
+			TimeDilationMeter -= MeterDrainRate;
+		}
+		else // Out of meter
+		{
+			ResumeTime();
+			TimeDilated = false;
+			TimeDilationEvent.Broadcast();
+		}
+	}
+	else
+	{
+		if (TimeDilationMeter < TimeDilationMeterMax)
+		{
+			TimeDilationMeter += MeterGainRate;
+		}
+	}
+}
+
+float ATank::GetTimeDilationMeterPercent()
+{
+	return TimeDilationMeter / TimeDilationMeterMax;
 }
