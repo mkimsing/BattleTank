@@ -28,16 +28,11 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	float BoostThrottle = 0;
 private:
-	void BeginPlay() override;
+	void BeginPlay() override; 
+	
+	TArray<class ASprungWheel*> GetWheels() const;
 
-	UFUNCTION()
-	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
-
-	void ApplySidewaysForce();
-
-	float CurrentThrottle = 0;
-
-	void DriveTrack();
+	void DriveTrack(float CurrentThrottle);
 
 	void Boost();
 };

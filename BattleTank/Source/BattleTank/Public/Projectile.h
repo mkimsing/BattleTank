@@ -41,8 +41,6 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float ProjectileDamage = 20.f;
 
-
-
 	UPROPERTY(VisibleAnywhere)
 	UParticleSystemComponent* LaunchBlast = nullptr;
 

@@ -27,6 +27,7 @@ public:
 	void PlayerDeath();
 
 protected:
+	
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent* AimComponentRef);
 
