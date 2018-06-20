@@ -25,6 +25,8 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = Movement)
 	float MaxDrivingForce = 40000000; // Assuming 1g accel, 40ton tank
 
+	UPROPERTY(BlueprintReadWrite)
+	float BoostThrottle = 0;
 private:
 	void BeginPlay() override;
 
@@ -36,4 +38,6 @@ private:
 	float CurrentThrottle = 0;
 
 	void DriveTrack();
+
+	void Boost();
 };
