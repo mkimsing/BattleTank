@@ -44,6 +44,15 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "TimeDilation")
 	float GetTimeDilationMeterPercent();
 
+	UFUNCTION(BlueprintCallable, Category = "Boost")
+	void AttemptBoost();
+
+	UFUNCTION(BlueprintCallable, Category = "Boost")
+	void ManageBoostMeter();
+
+	UFUNCTION(BlueprintCallable, Category = "Boost")
+	float GetBoostMeterPercent();
+
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Health")
 	int32 MaxHealth = 100;
@@ -51,6 +60,7 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Health")
 	int32 CurrentHealth;
 
+	//Time Dilation Implementation
 	UPROPERTY(EditDefaultsOnly, Category = "TimeDilation")
 	float TimeDilationMeterMax = 100;
 
@@ -58,10 +68,23 @@ private:
 	float TimeDilationMeter = TimeDilationMeterMax;
 
 	UPROPERTY(EditDefaultsOnly, Category = "TimeDilation")
-	float MeterDrainRate = 0.3;
+	float TDMeterDrainRate = 0.3;
 
 	UPROPERTY(EditDefaultsOnly, Category = "TimeDilation")
-	float MeterGainRate = 0.3;
+	float TDMeterGainRate = 0.3;
 
-	bool TimeDilated = false;;
+	bool TimeDilated = false;
+
+	// BOOST Implementation
+	UPROPERTY(EditDefaultsOnly, Category = "Boost")
+	float BoostMeterMax = 100;
+
+	UPROPERTY(VisibleAnywhere, Category = "Boost")
+	float BoostMeter = BoostMeterMax;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Boost")
+	float BoostMeterDrainAmount = 60;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Boost")
+	float BoostMeterGainRate = 0.1;
 };

@@ -2,6 +2,7 @@
 
 #include "Tank.h"
 #include "GameFramework/Controller.h"
+#include "TankTrack.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values
@@ -56,13 +57,18 @@ void ATank::ResumeTime()
 	}
 }
 
+float ATank::GetTimeDilationMeterPercent()
+{
+	return TimeDilationMeter / TimeDilationMeterMax;
+}
+
 void ATank::ManageDilationMeter()
 {
 	if (TimeDilated)
 	{
 		if (TimeDilationMeter > 0)
 		{
-			TimeDilationMeter -= MeterDrainRate;
+			TimeDilationMeter -= TDMeterDrainRate;
 		}
 		else // Out of meter
 		{
@@ -75,12 +81,38 @@ void ATank::ManageDilationMeter()
 	{
 		if (TimeDilationMeter < TimeDilationMeterMax)
 		{
-			TimeDilationMeter += MeterGainRate;
+			TimeDilationMeter += TDMeterGainRate;
 		}
 	}
 }
 
-float ATank::GetTimeDilationMeterPercent()
+/* BOOST IMPLEMENTATION */
+float ATank::GetBoostMeterPercent()
 {
-	return TimeDilationMeter / TimeDilationMeterMax;
+	return BoostMeter / BoostMeterMax;
 }
+
+void ATank::AttemptBoost()
+{
+	if (BoostMeter > BoostMeterDrainAmount)
+	{
+		TArray<UTankTrack*> Tracks;
+		GetComponents<UTankTrack>(Tracks);
+
+		if (!Tracks.IsValidIndex(0) || !Tracks.IsValidIndex(1)) { return; }
+		FTimerHandle BoostTimer;
+		Tracks[0]->Boost();
+		Tracks[1]->Boost();
+
+		BoostMeter -= BoostMeterDrainAmount;
+	}
+}
+
+void ATank::ManageBoostMeter()
+{
+	if (BoostMeter < BoostMeterMax)
+	{
+		BoostMeter += BoostMeterGainRate;
+	}
+}
+

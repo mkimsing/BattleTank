@@ -53,9 +53,10 @@ TArray<class ASprungWheel*> UTankTrack::GetWheels() const
 // TODO Refactor this to work with new driving mechanic
 void UTankTrack::Boost()
 {
-	FVector ForceApplied = GetForwardVector() * BoostThrottle * MaxDrivingForce;
-	FVector ForceLocation = GetComponentLocation();
-	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
-	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
+	auto Wheels = GetWheels();
+	for (ASprungWheel* Wheel : Wheels)
+	{
+		Wheel->Boost();
+	}
 }
 

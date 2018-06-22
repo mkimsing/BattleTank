@@ -21,6 +21,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void AddDrivingForce(float ForceMagnitude);
+
+	void Boost();
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -43,5 +45,9 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UPhysicsConstraintComponent* AxleWheelConstraint = nullptr;
 
+	UPROPERTY(VisibleAnywhere, Category = "Force")
 	float TotalForceMagnitudeThisFrame = 0;
+
+	float LastBoostTime;
+	float BoostDuration = 2;
 };
