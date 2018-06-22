@@ -50,4 +50,5 @@ private:
 
 	float LastBoostTime;
 	float BoostDuration = 2;
+	float BoostForce = 40000000;
 };

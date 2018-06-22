@@ -12,22 +12,27 @@ void ATankAIController::Tick(float DeltaTime) {
 
 	if (!PlayerTank || !ensure(ControlledTank)) { return; }
 	
+	DistanceAway = ControlledTank->GetDistanceTo(PlayerTank);
 	//Move towards the player
-	MoveToActor(PlayerTank, AcceptanceRadius);
-
+	if (DistanceAway <= ChaseRadius) {
+		MoveToActor(PlayerTank, AcceptanceRadius);
+	}
 	//Aim towards player
 	auto PlayerLocation = PlayerTank->GetActorLocation();
 	AimingComponent->AimAt(PlayerLocation);
 	
 	//Fire
 	if (AimingComponent->GetFiringStatus() == EFiringStatus::Locked) {
-		AimingComponent->Fire();
-
-		//Reload if needed
-		if (AimingComponent->GetAmmoCount() <= 0
-			&& AimingComponent->GetFiringStatus() != EFiringStatus::Reloading)
+		if (DistanceAway <= FiringRadius)
 		{
-			AimingComponent->Reload();
+			AimingComponent->Fire();
+
+			//Reload if needed
+			if (AimingComponent->GetAmmoCount() <= 0
+				&& AimingComponent->GetFiringStatus() != EFiringStatus::Reloading)
+			{
+				AimingComponent->Reload();
+			}
 		}
 	}	
 }
@@ -35,7 +40,6 @@ void ATankAIController::Tick(float DeltaTime) {
 void ATankAIController::BeginPlay() {
 	
 	Super::BeginPlay();
-	AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 }
 
 void ATankAIController::SetPawn(APawn* InPawn)
@@ -45,7 +49,7 @@ void ATankAIController::SetPawn(APawn* InPawn)
 	{
 		ATank* PossessedTank = Cast<ATank>(InPawn);
 		if (!PossessedTank) { return; }
-		
+		AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 		//Subscribe OnPossessedTankDeath to the tank's death event
 		PossessedTank->OnTankDeath.AddUniqueDynamic(this, &ATankAIController::OnPossessedTankDeath);
 	}

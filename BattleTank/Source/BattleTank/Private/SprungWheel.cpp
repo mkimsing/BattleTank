@@ -58,7 +58,7 @@ void ASprungWheel::Tick(float DeltaTime)
 		TotalForceMagnitudeThisFrame = 0;
 	}
 	if (FPlatformTime::Seconds() - LastBoostTime < BoostDuration) {
-		TotalForceMagnitudeThisFrame += 50000000;
+		TotalForceMagnitudeThisFrame += BoostForce;
 	}
 
 }
