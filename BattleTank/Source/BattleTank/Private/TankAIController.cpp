@@ -10,7 +10,12 @@ void ATankAIController::Tick(float DeltaTime) {
 	auto PlayerTank = (GetWorld()->GetFirstPlayerController()->GetPawn());
 	auto ControlledTank =  (GetPawn());
 
-	if (!PlayerTank || !ensure(ControlledTank)) { return; }
+	if (!ControlledTank)
+	{
+		Destroy();
+		return;
+	}
+	if (!PlayerTank) { return; }
 	
 	DistanceAway = ControlledTank->GetDistanceTo(PlayerTank);
 	//Move towards the player
@@ -50,6 +55,7 @@ void ATankAIController::SetPawn(APawn* InPawn)
 		ATank* PossessedTank = Cast<ATank>(InPawn);
 		if (!PossessedTank) { return; }
 		AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+
 		//Subscribe OnPossessedTankDeath to the tank's death event
 		PossessedTank->OnTankDeath.AddUniqueDynamic(this, &ATankAIController::OnPossessedTankDeath);
 	}
@@ -60,5 +66,4 @@ void ATankAIController::OnPossessedTankDeath()
 	if (!GetPawn()) { return; }
 	OnKilled();
 	GetPawn()->DetachFromControllerPendingDestroy();
-
 }
