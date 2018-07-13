@@ -57,10 +57,6 @@ void ASprungWheel::Tick(float DeltaTime)
 	{
 		TotalForceMagnitudeThisFrame = 0;
 	}
-	if (FPlatformTime::Seconds() - LastBoostTime < BoostDuration) {
-		TotalForceMagnitudeThisFrame += BoostForce;
-	}
-
 }
 
 void ASprungWheel::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
@@ -71,9 +67,4 @@ void ASprungWheel::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, 
 void ASprungWheel::ApplyForce()
 {
 	Wheel->AddForce(Axle->GetForwardVector() * TotalForceMagnitudeThisFrame);
-}
-
-void ASprungWheel::Boost()
-{
-	LastBoostTime = FPlatformTime::Seconds();
 }

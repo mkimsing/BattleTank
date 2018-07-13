@@ -48,7 +48,4 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Force")
 	float TotalForceMagnitudeThisFrame = 0;
 
-	float LastBoostTime;
-	float BoostDuration = 0.5;
-	float BoostForce = 10000000;
 };

@@ -24,9 +24,15 @@ void UTankTrack::DriveTrack(float CurrentThrottle)
 {
 	float ForceApplied = CurrentThrottle * MaxDrivingForce;
 	auto Wheels = GetWheels();
+
+	if (FPlatformTime::Seconds() - LastBoostTime < BoostDuration)
+	{
+		ForceApplied += BoostForce;
+	}
 	auto ForcePerWheel = ForceApplied / Wheels.Num();
 	for (ASprungWheel* Wheel : Wheels)
 	{
+
 		Wheel->AddDrivingForce(ForcePerWheel);
 	}
 }
@@ -52,10 +58,6 @@ TArray<class ASprungWheel*> UTankTrack::GetWheels() const
 
 void UTankTrack::Boost()
 {
-	auto Wheels = GetWheels();
-	for (ASprungWheel* Wheel : Wheels)
-	{
-		Wheel->Boost();
-	}
+	LastBoostTime = FPlatformTime::Seconds();
 }
 

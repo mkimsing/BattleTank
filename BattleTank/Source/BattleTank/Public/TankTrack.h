@@ -33,4 +33,7 @@ private:
 
 	void DriveTrack(float CurrentThrottle);
 
+	float BoostForce = 35000000;
+	float BoostDuration = 1.5;
+	float LastBoostTime = 0;
 };
