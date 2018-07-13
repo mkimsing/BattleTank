@@ -57,7 +57,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Health")
 	int32 MaxHealth = 60;
 
-	UPROPERTY(VisibleAnywhere, Category = "Health")
+	UPROPERTY(EditDefaultsOnly, Category = "Health")
 	int32 CurrentHealth;
 
 	//Time Dilation Implementation

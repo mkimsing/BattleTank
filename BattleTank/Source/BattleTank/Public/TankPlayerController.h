@@ -34,6 +34,7 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnPlayerTankDamage();
 
+
 private:
 	virtual void Tick(float DeltaTime) override;
 
