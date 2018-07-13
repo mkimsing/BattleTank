@@ -32,7 +32,7 @@ protected:
 
 	//How the player needs to be for the tanks to chase (in cm)
 	UPROPERTY(EditAnywhere, Category = "Setup")
-	float ChaseRadius = 25000;
+	float ChaseRadius = 30000;
 private:
 	void Tick(float DeltaTime) override;
 

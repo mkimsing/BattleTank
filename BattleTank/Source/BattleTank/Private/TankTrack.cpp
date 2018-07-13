@@ -50,7 +50,6 @@ TArray<class ASprungWheel*> UTankTrack::GetWheels() const
 	return ResultArray;
 }
 
-// TODO Refactor this to work with new driving mechanic
 void UTankTrack::Boost()
 {
 	auto Wheels = GetWheels();

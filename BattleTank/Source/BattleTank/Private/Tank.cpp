@@ -86,7 +86,7 @@ void ATank::ManageDilationMeter()
 	}
 }
 
-/* BOOST IMPLEMENTATION */
+/** BOOST IMPLEMENTATION **/
 float ATank::GetBoostMeterPercent()
 {
 	return BoostMeter / BoostMeterMax;

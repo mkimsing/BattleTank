@@ -49,6 +49,6 @@ private:
 	float TotalForceMagnitudeThisFrame = 0;
 
 	float LastBoostTime;
-	float BoostDuration = 2;
-	float BoostForce = 40000000;
+	float BoostDuration = 0.5;
+	float BoostForce = 10000000;
 };

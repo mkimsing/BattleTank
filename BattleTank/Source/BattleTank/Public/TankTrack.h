@@ -23,7 +23,7 @@ public:
 	
 	/// Maximum driving force per track in Newtons
 	UPROPERTY(EditDefaultsOnly, Category = Movement)
-	float MaxDrivingForce = 40000000; // Assuming 1g accel, 40ton tank
+	float MaxDrivingForce = 35000000; // Assuming 1g accel, 40ton tank
 
 	void Boost();
 private:
