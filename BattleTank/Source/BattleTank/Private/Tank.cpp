@@ -33,6 +33,21 @@ float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEv
 	return (float)DamageToApply;
 }
 
+int32 ATank::GetCurrentHealth() const
+{
+	return CurrentHealth;
+}
+
+void ATank::SetCurrentHealth( int32 HealthValue)
+{
+	CurrentHealth = HealthValue;
+}
+
+int32 ATank::GetMaxHealth() const
+{
+	return MaxHealth;
+}
+
 float ATank::GetHealthPercentage() const
 {
 	return (float)CurrentHealth / (float)MaxHealth;

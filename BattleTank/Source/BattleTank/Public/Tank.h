@@ -24,6 +24,15 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Health")
 	float GetHealthPercentage() const;
 
+	UFUNCTION(BlueprintCallable, Category = "Health")
+	int32 GetCurrentHealth() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Health")
+	void SetCurrentHealth(int32 HealthValue);
+
+	UFUNCTION(BlueprintCallable, Category = "Health")
+	int32 GetMaxHealth() const;
+
 	FTankDelegate OnTankDeath;
 	FTankDelegate OnTakeDamage;
 
@@ -57,7 +66,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Health")
 	int32 MaxHealth = 60;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Health")
+	UPROPERTY(VisibleAnywhere, Category = "Health")
 	int32 CurrentHealth;
 
 	//Time Dilation Implementation
