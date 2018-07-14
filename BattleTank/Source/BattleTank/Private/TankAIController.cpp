@@ -28,9 +28,12 @@ void ATankAIController::Tick(float DeltaTime) {
 	
 	//Fire
 	if (AimingComponent->GetFiringStatus() == EFiringStatus::Locked) {
-		if (DistanceAway <= FiringRadius)
+		if (DistanceAway <= FiringRadius && !GetWorld()->GetTimerManager().IsTimerActive(AIFiringTimer))
 		{
 			AimingComponent->Fire();
+
+			//Set Timer to limit firing rate
+			GetWorld()->GetTimerManager().SetTimer(AIFiringTimer, FiringRate, false, 0.f);
 
 			//Reload if needed
 			if (AimingComponent->GetAmmoCount() <= 0

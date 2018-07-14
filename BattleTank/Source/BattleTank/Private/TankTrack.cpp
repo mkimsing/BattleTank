@@ -22,13 +22,16 @@ void UTankTrack::SetThrottle(float Throttle) {
 
 void UTankTrack::DriveTrack(float CurrentThrottle)
 {
-	float ForceApplied = CurrentThrottle * MaxDrivingForce;
-	auto Wheels = GetWheels();
-
+	float ForceApplied = 0;
 	if (FPlatformTime::Seconds() - LastBoostTime < BoostDuration)
 	{
-		ForceApplied += BoostForce;
+		ForceApplied = CurrentThrottle * (MaxDrivingForce + BoostForce);
 	}
+	else {
+		ForceApplied = CurrentThrottle * MaxDrivingForce;
+	}
+	auto Wheels = GetWheels();
+
 	auto ForcePerWheel = ForceApplied / Wheels.Num();
 	for (ASprungWheel* Wheel : Wheels)
 	{

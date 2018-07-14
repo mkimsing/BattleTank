@@ -22,7 +22,9 @@ public:
 
 	void AddDrivingForce(float ForceMagnitude);
 
-	void Boost();
+	UFUNCTION(BlueprintCallable)
+	void Launch(FVector Direction, float Force);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

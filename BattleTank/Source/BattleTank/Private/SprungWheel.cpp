@@ -68,3 +68,8 @@ void ASprungWheel::ApplyForce()
 {
 	Wheel->AddForce(Axle->GetForwardVector() * TotalForceMagnitudeThisFrame);
 }
+
+void ASprungWheel::Launch(FVector Direction, float Force)
+{
+	Wheel->AddForce(Direction * Force);
+}

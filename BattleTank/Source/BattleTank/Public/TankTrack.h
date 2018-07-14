@@ -26,14 +26,16 @@ public:
 	float MaxDrivingForce = 35000000; // Assuming 1g accel, 40ton tank
 
 	void Boost();
+
+	UFUNCTION(BlueprintCallable)
+	TArray<class ASprungWheel*> GetWheels() const;
+
 private:
 	void BeginPlay() override; 
 	
-	TArray<class ASprungWheel*> GetWheels() const;
-
 	void DriveTrack(float CurrentThrottle);
 
-	float BoostForce = 35000000;
-	float BoostDuration = 1.5;
+	float BoostForce = 60000000;
+	float BoostDuration = 1;
 	float LastBoostTime = 0;
 };

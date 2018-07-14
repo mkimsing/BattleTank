@@ -28,7 +28,7 @@ protected:
 
 	//How close the AI tanks can get to the player (in cm)
 	UPROPERTY(EditAnywhere, Category = "Setup")
-	float AcceptanceRadius = 10000;
+	float AcceptanceRadius = 6000;
 
 	//How the player needs to be for the tanks to chase (in cm)
 	UPROPERTY(EditAnywhere, Category = "Setup")
@@ -49,4 +49,7 @@ private:
 	float FiringRadius = 20000;
 
 	float DistanceAway;
+
+	FTimerHandle AIFiringTimer;
+	float FiringRate = 2.0f;
 };
