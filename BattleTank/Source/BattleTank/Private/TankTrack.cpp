@@ -16,20 +16,13 @@ void UTankTrack::BeginPlay()
 }
 
 void UTankTrack::SetThrottle(float Throttle) {
-	float CurrentThrottle = FMath::Clamp<float>(Throttle, -1, 1);
+	CurrentThrottle = FMath::Clamp<float>(Throttle, -1, 1);
 	DriveTrack(CurrentThrottle);
 }
 
 void UTankTrack::DriveTrack(float CurrentThrottle)
 {
-	float ForceApplied = 0;
-	if (FPlatformTime::Seconds() - LastBoostTime < BoostDuration)
-	{
-		ForceApplied = CurrentThrottle * (MaxDrivingForce + BoostForce);
-	}
-	else {
-		ForceApplied = CurrentThrottle * MaxDrivingForce;
-	}
+	float ForceApplied = CurrentThrottle * MaxDrivingForce;
 	auto Wheels = GetWheels();
 
 	auto ForcePerWheel = ForceApplied / Wheels.Num();
@@ -61,6 +54,14 @@ TArray<class ASprungWheel*> UTankTrack::GetWheels() const
 
 void UTankTrack::Boost()
 {
-	LastBoostTime = FPlatformTime::Seconds();
+	auto Wheels = GetWheels();
+	float ForcePerWheel = BoostForce / Wheels.Num();
+	
+	float Direction = (CurrentThrottle >= 0) ? 1 : -1;
+
+	for (ASprungWheel* Wheel : Wheels)
+	{
+		Wheel->Launch(GetForwardVector(), ForcePerWheel*Direction);
+	}
 }
 

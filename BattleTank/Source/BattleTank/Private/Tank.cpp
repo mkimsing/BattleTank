@@ -107,6 +107,11 @@ float ATank::GetBoostMeterPercent()
 	return BoostMeter / BoostMeterMax;
 }
 
+void ATank::StartBoost()
+{
+	GetWorld()->GetTimerManager().SetTimer(BoostTimer, this, &ATank::AttemptBoost, BoostInterval, true,0.0f);
+}
+
 void ATank::AttemptBoost()
 {
 	if (BoostMeter > BoostMeterDrainAmount)
@@ -115,19 +120,33 @@ void ATank::AttemptBoost()
 		GetComponents<UTankTrack>(Tracks);
 
 		if (!Tracks.IsValidIndex(0) || !Tracks.IsValidIndex(1)) { return; }
-		FTimerHandle BoostTimer;
 		Tracks[0]->Boost();
 		Tracks[1]->Boost();
+	}
+}
+void ATank::StopBoost()
+{	
+	GetWorld()->GetTimerManager().ClearTimer(BoostTimer);
+	
+}
+void ATank::ManageBoostMeter()
+{
+	if (GetWorld()->GetTimerManager().IsTimerActive(BoostTimer) && BoostMeter > 0)
+	{
 
 		BoostMeter -= BoostMeterDrainAmount;
 	}
-}
-
-void ATank::ManageBoostMeter()
-{
-	if (BoostMeter < BoostMeterMax)
+	else if (GetWorld()->GetTimerManager().IsTimerActive(BoostTimer) && BoostMeter <= 0)
 	{
-		BoostMeter += BoostMeterGainRate;
+		StopBoost();
 	}
+	else 
+	{
+		if (BoostMeter < BoostMeterMax)
+		{
+			BoostMeter += BoostMeterGainRate;
+		}
+	}
+	
 }
 

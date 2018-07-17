@@ -54,7 +54,10 @@ public:
 	float GetTimeDilationMeterPercent();
 
 	UFUNCTION(BlueprintCallable, Category = "Boost")
-	void AttemptBoost();
+	void StartBoost();
+
+	UFUNCTION(BlueprintCallable, Category = "Boost")
+	void StopBoost();
 
 	UFUNCTION(BlueprintCallable, Category = "Boost")
 	void ManageBoostMeter();
@@ -85,6 +88,9 @@ private:
 	bool TimeDilated = false;
 
 	// BOOST Implementation
+
+	void AttemptBoost();
+
 	UPROPERTY(EditDefaultsOnly, Category = "Boost")
 	float BoostMeterMax = 100;
 
@@ -92,8 +98,14 @@ private:
 	float BoostMeter = BoostMeterMax;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Boost")
-	float BoostMeterDrainAmount = 60;
+	float BoostMeterDrainAmount = 0.5;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Boost")
-	float BoostMeterGainRate = 0.1;
+	float BoostMeterGainRate = 0.3;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Boost")
+	float BoostInterval = 0.1;
+
+	FTimerHandle BoostTimer;
+
 };
