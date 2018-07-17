@@ -25,6 +25,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = Movement)
 	float MaxDrivingForce = 35000000; // Assuming 1g accel, 40ton tank
 
+	UFUNCTION(BlueprintCallable, Category = "Boost")
 	void Boost();
 
 	UFUNCTION(BlueprintCallable)
@@ -36,6 +37,6 @@ private:
 	void DriveTrack(float CurrentThrottle);
 
 	float CurrentThrottle;
-	float BoostForce = 500000000;
+	float BoostForce = 850000000; //TODO Decouple this from the Boost Volume's force
 	FTimerHandle BoostTimer;
 };

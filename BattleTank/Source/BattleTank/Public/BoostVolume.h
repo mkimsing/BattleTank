@@ -12,19 +12,12 @@ UCLASS()
 class BATTLETANK_API ABoostVolume : public ATriggerBox
 {
 	GENERATED_BODY()
-	
-public:
+
 	ABoostVolume();
 
-	UFUNCTION()
-	void TriggerBoost(AActor* OverlappedActor);
+public:
 
 private:
-	
-	ATriggerBox* Box;
-	FTimerHandle BoostTimer;
-	float BoostDuration = 1.5f;
-
-	void Boost(AActor* OverlappedActor);
-
+	UPROPERTY(EditAnywhere, Category = "Setup")
+	float BoostForce = 500000000;
 };
