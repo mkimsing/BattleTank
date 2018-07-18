@@ -18,6 +18,5 @@ class BATTLETANK_API ABoostVolume : public ATriggerBox
 public:
 
 private:
-	UPROPERTY(EditAnywhere, Category = "Setup")
-	float BoostForce = 500000000;
+
 };

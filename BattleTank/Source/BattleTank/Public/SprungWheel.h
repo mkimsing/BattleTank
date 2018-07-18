@@ -21,7 +21,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void AddDrivingForce(float ForceMagnitude);
-
+	void ApplyForce(float Force);
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

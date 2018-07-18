@@ -108,4 +108,5 @@ private:
 
 	FTimerHandle BoostTimer;
 
+	float BoostForce = 450000000;
 };

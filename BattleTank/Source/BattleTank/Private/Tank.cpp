@@ -120,8 +120,8 @@ void ATank::AttemptBoost()
 		GetComponents<UTankTrack>(Tracks);
 
 		if (!Tracks.IsValidIndex(0) || !Tracks.IsValidIndex(1)) { return; }
-		Tracks[0]->Boost();
-		Tracks[1]->Boost();
+		Tracks[0]->BoostOnGround(BoostForce);
+		Tracks[1]->BoostOnGround(BoostForce);
 	}
 }
 void ATank::StopBoost()

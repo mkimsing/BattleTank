@@ -55,8 +55,19 @@ TArray<class ASprungWheel*> UTankTrack::GetWheels() const
 void UTankTrack::Boost()
 {
 	auto Wheels = GetWheels();
+	float ForcePerWheel = (BoostPadForce) / Wheels.Num();
+
+	for (ASprungWheel* Wheel : Wheels)
+	{
+		Wheel->ApplyForce(ForcePerWheel);
+	}
+}
+
+void UTankTrack::BoostOnGround(float force)
+{
+	auto Wheels = GetWheels();
 	float Direction = (CurrentThrottle >= 0) ? 1 : -1;
-	float ForcePerWheel = (BoostForce*Direction) / Wheels.Num();
+	float ForcePerWheel = (force*Direction) / Wheels.Num();
 
 	for (ASprungWheel* Wheel : Wheels)
 	{

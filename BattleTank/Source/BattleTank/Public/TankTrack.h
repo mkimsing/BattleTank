@@ -28,6 +28,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Boost")
 	void Boost();
 
+	void BoostOnGround(float force);
+
 	UFUNCTION(BlueprintCallable)
 	TArray<class ASprungWheel*> GetWheels() const;
 
@@ -37,6 +39,7 @@ private:
 	void DriveTrack(float CurrentThrottle);
 
 	float CurrentThrottle;
-	float BoostForce = 850000000; //TODO Decouple this from the Boost Volume's force
 	FTimerHandle BoostTimer;
+
+	float BoostPadForce = 1500000000;
 };
