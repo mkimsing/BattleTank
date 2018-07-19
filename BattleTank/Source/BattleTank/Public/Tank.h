@@ -32,8 +32,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Health")
 	int32 GetMaxHealth() const;
-
+	
+	UPROPERTY(BlueprintAssignable)
 	FTankDelegate OnTankDeath;
+
 	FTankDelegate OnTakeDamage;
 
 	UPROPERTY(BlueprintAssignable, Category = "TimeDilation")
