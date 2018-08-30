@@ -51,5 +51,5 @@ private:
 	float DistanceAway;
 
 	FTimerHandle AIFiringTimer;
-	float FiringRate = 3.0f;
+	float FiringRate = 4.0f;
 };

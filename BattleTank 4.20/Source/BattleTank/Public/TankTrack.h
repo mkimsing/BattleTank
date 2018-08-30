@@ -41,5 +41,5 @@ private:
 	float CurrentThrottle;
 	FTimerHandle BoostTimer;
 
-	float BoostPadForce = 1300000000;
+	float BoostPadForce = 1150000000;
 };
